@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Character Countdown Test</title>
+	<style>
+		label { display: block; }
+	</style>
+</head>
+<body>
+
+<form>
+	<label for="count1">Textarea with maxlength of 1024</label>
+	<textarea id="count1" maxlength="1024"></textarea>
+
+	<label for="count2">Textarea with maxlength of 450</label>
+	<textarea id="count2" maxlength="450"></textarea>
+
+	<label for="count3">Textarea w/o maxlength</label>
+	<textarea id="count3"></textarea>
+</form>
+
+<script src="http://code.jquery.com/jquery-1.11.2.js"></script>
+<script src="jquery.charcountdown.js"></script>
+<script>
+	// init Character Countdown
+	$('#count1, #count2, #count3').charCountdown();
+</script>
+</body>
+</html>
