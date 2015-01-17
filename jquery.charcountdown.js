@@ -61,6 +61,8 @@
  *
  * + What (if anything) to do with fields that start beyond max_chars when
  *   allow_overrun is false?
+ *
+ * + Allow for counting up as well as down?
  */
 ;(function($) {
 	$.fn.charCountdown = function(user_settings)
