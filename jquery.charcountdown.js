@@ -1,71 +1,11 @@
 /**
- * jQuery Character Countdown v1.3
+ * jQuery Character Countdown v1.3.0
  * Copyright (c) 2011-2015 Adam Messinger (www.zenscope.com)
- * Distributed under the MIT License:
- *   http://www.opensource.org/licenses/mit-license.php
- * @requires jQuery 1.8 or later
+ * Released under the MIT license, see LICENSE file for details.
  *
- * A plugin for producing a twitter-like countdown of the characters remaining
- * in a form field that only allows a limited amount of content.
- *
- * =CHANGE LOG=
- * ---------------------
- * As of v1.2, normalizes line-ending count across browsers to always count
- * CR & LF, per the HTML5 spec for a textarea's submission value*, rather than
- * counting them differently in field.value.length and when constraining input
- * based on maxlength (a WebKit peculiarity).
- *       * http://www.w3.org/TR/html5/forms.html#the-textarea-element
- *
- * Also in 1.2, emulates maxlength support for textareas in browsers that don't
- * offer this HTML5 feature or do so in a way that throws off the character
- * count (I'm looking at you, WebKit).
- *
- * As of 1.3, added allow_overrun parameter (see below).
- *
- * =PARAMETER REFERENCE=
- * ---------------------
- * + max_chars: The max number of characters allowed in the field. Defaults to
- *   the field's "maxlength" attribute if available, or 500 if no maxlength.
- *
- * + low_chars: The number of characters remaining that triggers the addition of
- *   the "low_class" parameter as a class name on the character count.
- *   Default: 10
- *
- * + allow_overrun: Boolean parameter indicating whether the user is allowed to
- *   exceed max_chars, pushing the counter into the negative. Default: false
- *
- * + low_class: The class name added to the character count once the number of
- *   characters remaining reaches low_chars. Default: "low"
- *
- * + field_class: The class name added to fields using this plugin as a hook to
- *   any related styles you want to apply. Default: "has-counter"
- *
- * + counter_class: The class name of the <label> element that contains the
- *   countdown of remaining characters. Default: "char-counter"
- *
- * + counter_message: The text that precedes and explains the numerical
- *   countdown. Default: "Characters remaining: "
- *
- * + counter_location: Where you want the countdown to appear. Accepts "before"
- *   (puts the countdown immediately before the field in the DOM tree), "after"
- *   (like "before" only... after-er), or a jQuery selector (appends the
- *   countdown to the selector's target(s)). Default: "after"
- *
- * =TODO=
- * ---------------------
- * + When allow_overrun is true and field starts beyond max_chars, goes beyond it,
- *   or goes back below max trigger event. Either different events for exceeding
- *   max and and coming back within bounds or one event with current char count
- *   passed as data for use in a callback. Users can listen for this/these event(s)
- *   to do things like disable/enable submit buttons.
- *
- * + What (if anything) to do with fields that start beyond max_chars when
- *   allow_overrun is false?
- *
- * + Allow for counting up as well as down?
+ * requires jQuery 1.8 or later
  */
-;
-(function($) {
+;(function($) {
   $.fn.charCountdown = function(user_settings) {
     return this.each(function() {
       var starting_count,
