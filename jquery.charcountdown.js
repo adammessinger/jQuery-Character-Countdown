@@ -25,7 +25,8 @@
         counter_location: 'after'  // takes "before", "after", or jQuery selector
       }, user_settings || {});
 
-      // if overrun is allowed, remove maxlength attr to prevent browser-native input inhibition
+      // if overrun allowed, remove maxlength attr to prevent input inhibition
+      // by browser
       if (settings.allow_overrun) {
         $field.removeAttr('maxlength');
       }
@@ -42,8 +43,6 @@
         text: starting_count
       }));
       $counter = $counter_label.find('strong');
-
-      // window.console && console.log('starting count: ', starting_count);
 
       $field.addClass(settings.field_class);
       switch (settings.counter_location) {
@@ -62,11 +61,10 @@
       // * on input for instant action (in compatible browsers -- not IE 8)
       // * on keyup for broad compatibility
       // * on change for non-keyboard inputs like paste w/ mouse
-      // Event lineup inspired by James "brothercake" Edwards's Form Tools Library: http://bit.ly/10vFicw
+      // Event lineup inspired by James "brothercake" Edwards's Form Tools
+      // Library: http://bit.ly/10vFicw
       $field.on('input keyup change', function() {
         var new_count = calcCount($field[0], settings.max_chars);
-
-        // window.console && console.log('new count: ', new_count);
 
         if (new_count < 0 && !settings.allow_overrun) {
           doMaxlength($field[0], Math.abs(new_count));
@@ -84,12 +82,12 @@
     });
   };
 
-  // private function for counting remaining characters
+  // count remaining characters
   function calcCount(field, max) {
     return max - field.value.replace(/\r\n|\r|\n/g, '\r\n').length;
   }
 
-  // private function for maxlength emulation
+  // maxlength emulation
   function doMaxlength(field, excess_len) {
     var excess_end = getInputSelection(field).start,
         excess_start = excess_end - excess_len,
@@ -99,7 +97,7 @@
     setCaretPosition(field, excess_start);
   }
 
-  // private function for cross-browser set cursor position from http://bit.ly/12AjxJ7
+  // cross-browser set cursor position from http://bit.ly/12AjxJ7
   function setCaretPosition(field, pos) {
     var range;
 
@@ -117,7 +115,7 @@
     }
   }
 
-  // private function for cross-browser get cursor position from http://stackoverflow.com/a/3053640
+  // cross-browser get cursor position from http://stackoverflow.com/a/3053640
   function getInputSelection(field) {
     var start = 0,
         end = 0,
