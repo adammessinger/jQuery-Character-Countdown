@@ -82,8 +82,13 @@
   };
 
 
+  function _normalizeLineEndings(text) {
+    return text.replace(/\r\n|\r|\n/g, '\r\n');
+  }
+
+
   function _calcRemainingCharCount(field, max) {
-    return max - field.value.replace(/\r\n|\r|\n/g, '\r\n').length;
+    return (max - _normalizeLineEndings(field.value).length);
   }
 
 
@@ -134,7 +139,7 @@
 
       if (range && range.parentElement() == field) {
         len = field.value.length;
-        normalizedValue = field.value.replace(/\r\n|\r|\n/g, '\r\n');
+        normalizedValue = _normalizeLineEndings(field.value);
 
         // Create a working TextRange that lives only in the input
         textInputRange = field.createTextRange();
