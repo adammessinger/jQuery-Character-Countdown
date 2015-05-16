@@ -10,3 +10,4 @@
 * [ ] What (if anything) to do with fields that start beyond max_chars when
       allow_overrun is false? Truncate?
 * [ ] Option to allow for counting up as well as down?
+* [ ] Refactor `_getInputSelection` function with less conditional spaghetti.
