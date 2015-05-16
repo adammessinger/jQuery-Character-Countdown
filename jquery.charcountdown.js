@@ -6,23 +6,24 @@
  * requires jQuery 1.8 or later
  */
 ;(function($) {
+  'use strict';
+
   $.fn.charCountdown = function(user_settings) {
     return this.each(function() {
-      var starting_count,
-          $counter_label,
-          $counter,
-          $field = $(this),
-          // merge user args with defaults
-          settings = $.extend({
-            max_chars: parseInt($field.attr('maxlength'), 10) || 500,
-            low_chars: 10,
-            allow_overrun: false,
-            low_class: 'low',
-            field_class: 'has-counter',
-            counter_class: 'char-counter',
-            counter_message: 'Characters remaining: ',
-            counter_location: 'after'  // takes "before", "after", or jQuery selector
-          }, user_settings || {});
+      var starting_count;
+      var $counter_label;
+      var $counter;
+      var $field = $(this);
+      var settings = $.extend({
+        max_chars: parseInt($field.attr('maxlength'), 10) || 500,
+        low_chars: 10,
+        allow_overrun: false,
+        low_class: 'low',
+        field_class: 'has-counter',
+        counter_class: 'char-counter',
+        counter_message: 'Characters remaining: ',
+        counter_location: 'after'  // takes "before", "after", or jQuery selector
+      }, user_settings || {});
 
       // if overrun is allowed, remove maxlength attr to prevent browser-native input inhibition
       if (settings.allow_overrun) {
