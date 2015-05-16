@@ -1,5 +1,6 @@
 /**
  * jQuery Character Countdown v1.3.1
+ * https://github.com/adammessinger/jQuery-Character-Countdown
  * Copyright (c) 2011-2015 Adam Messinger (www.zenscope.com)
  * Released under the MIT license, see LICENSE file for details.
  *
