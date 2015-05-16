@@ -32,7 +32,7 @@
       }
 
       // begin with a label that represents the current char count
-      starting_count = calcCount($field[0], settings.max_chars);
+      starting_count = _calcRemainingCharCount($field[0], settings.max_chars);
       $counter_label = $('<label></label>', {
         "for": $field[0].id,
         "class": settings.counter_class,
@@ -64,49 +64,49 @@
       // Event lineup inspired by James "brothercake" Edwards's Form Tools
       // Library: http://bit.ly/10vFicw
       $field.on('input keyup change', function() {
-        var new_count = calcCount($field[0], settings.max_chars);
+        var new_count = _calcRemainingCharCount($field[0], settings.max_chars);
 
         if (new_count < 0 && !settings.allow_overrun) {
-          doMaxlength($field[0], Math.abs(new_count));
+          _emulateMaxlength($field[0], Math.abs(new_count));
           new_count = 0;
         }
 
         $counter.text(new_count);
         if (new_count <= settings.low_chars) {
           $counter.addClass(settings.low_class);
-        }
-        else {
+        } else {
           $counter.removeClass(settings.low_class);
         }
       });
     });
   };
 
-  // count remaining characters
-  function calcCount(field, max) {
+
+  function _calcRemainingCharCount(field, max) {
     return max - field.value.replace(/\r\n|\r|\n/g, '\r\n').length;
   }
 
-  // maxlength emulation
-  function doMaxlength(field, excess_len) {
-    var excess_end = getInputSelection(field).start,
-        excess_start = excess_end - excess_len,
-        val = field.value;
+
+  function _emulateMaxlength(field, excess_len) {
+    var excess_end = _getInputSelection(field).start;
+    var excess_start = excess_end - excess_len;
+    var val = field.value;
+
     // concatenate the value before and after excess, removing the extra chars
     field.value = val.substring(0, excess_start) + val.substring(excess_end);
-    setCaretPosition(field, excess_start);
+    _setCaretPosition(field, excess_start);
   }
 
+
   // cross-browser set cursor position from http://bit.ly/12AjxJ7
-  function setCaretPosition(field, pos) {
+  function _setCaretPosition(field, pos) {
     var range;
 
     field.focus();
 
     if (field.setSelectionRange) {
       field.setSelectionRange(pos, pos);
-    }
-    else if (field.createTextRange) {
+    } else if (field.createTextRange) {
       range = field.createTextRange();
       range.collapse(true);
       range.moveEnd('character', pos);
@@ -115,18 +115,21 @@
     }
   }
 
-  // cross-browser get cursor position from http://stackoverflow.com/a/3053640
-  function getInputSelection(field) {
-    var start = 0,
-        end = 0,
-        normalizedValue, range,
-        textInputRange, len, endRange;
+
+  // cross-browser get selection from http://stackoverflow.com/a/3053640
+  function _getInputSelection(field) {
+    var start = 0;
+    var end = 0;
+    var normalizedValue;
+    var range;
+    var textInputRange;
+    var len;
+    var endRange;
 
     if (typeof field.selectionStart == "number" && typeof field.selectionEnd == "number") {
       start = field.selectionStart;
       end = field.selectionEnd;
-    }
-    else {
+    } else {
       range = document.selection.createRange();
 
       if (range && range.parentElement() == field) {
@@ -145,15 +148,13 @@
 
         if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
           start = end = len;
-        }
-        else {
+        } else {
           start = -textInputRange.moveStart("character", -len);
           start += normalizedValue.slice(0, start).split("\n").length - 1;
 
           if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
             end = len;
-          }
-          else {
+          } else {
             end = -textInputRange.moveEnd("character", -len);
             end += normalizedValue.slice(0, end).split("\n").length - 1;
           }
